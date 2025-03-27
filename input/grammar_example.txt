@@ -1,0 +1,3 @@
+X ->a B                   
+B-> B X | g G
+G -> a
