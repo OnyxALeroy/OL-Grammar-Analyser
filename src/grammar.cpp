@@ -1,5 +1,14 @@
 #include "grammar.hpp"
 
+// ------------------------------------------------------------------------------------------------
+
+std::string Grammar::getAxiomName() const {
+    if (m_nonTerminals.size() == 0) {
+        throw std::runtime_error("No axiom defined");
+    }
+    return m_nonTerminals.find(m_axiom)->second;
+}
+
 std::optional<int> Grammar::getNonTerminal(std::string name) const {
     for (const auto &pair : this->m_nonTerminals) {
         if (pair.second == name) {
