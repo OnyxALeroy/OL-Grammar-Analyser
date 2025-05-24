@@ -1,5 +1,7 @@
 from typing import List, Dict, Set, Union
+from dataclasses import dataclass
 
+@dataclass
 class Terminal:
     def __init__(self, symbol: str):
         self.symbol: str = symbol
@@ -13,6 +15,7 @@ class Terminal:
     def __hash__(self):
         return hash(self.symbol)
 
+@dataclass
 class NonTerminal:
     def __init__(self, symbol: str):
         self.symbol: str = symbol
@@ -34,8 +37,17 @@ class Grammar:
         self.symbols: Set[Terminal | NonTerminal] = set()
         self.terminals: Set[Terminal] = set()
         self.non_terminals: Set[NonTerminal] = set()
-        self.rules: Dict[NonTerminal, List[ List[NonTerminal, Terminal] ]] = {}
+        self.rules: Dict[NonTerminal, List[ List[NonTerminal | Terminal] ]] = {}
         pass
+
+    def duplicate(self, other: "Grammar" = None):
+        self.axiom: NonTerminal = other.axiom
+        self.symbols: Set[Terminal | NonTerminal] = other.symbols.copy()
+        self.terminals: Set[Terminal] = other.terminals.copy()
+        self.non_terminals: Set[NonTerminal] = other.non_terminals.copy()
+        self.rules: Dict[NonTerminal, List[ List[NonTerminal | Terminal] ]] = other.rules.copy()
+        pass
+
     def set_axiom(self, axiom: NonTerminal) -> None:
         self.axiom = axiom
         pass
@@ -104,5 +116,11 @@ class Grammar:
         print("\033[0m")
         print("\033[104m===============================\033[0m")
         pass
+
+# -------------------------------------------------------------------------------------------------
+
+def get_grammar_sample() -> Grammar:
+    # TODO: build a big grammar sample here (used for tests)
+    return Grammar()
 
 # -------------------------------------------------------------------------------------------------
